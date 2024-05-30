@@ -1,0 +1,22 @@
+from tkinter import *
+root = Tk()
+f = Frame(root)
+f.pack()
+f1 = Frame(f, height=400, width=400, bg='blue')
+f1.pack()
+img = PhotoImage(file='C:\\Users\\ucbra\\OneDrive\\Desktop\\UC Academy\\Vandan\\Python Advanced I\\small_fly.png')
+l1 = Label(f, image=img)
+l1.pack()
+l2 = Label(f, text='colours!', bg='black', fg='white',
+justify='center')
+l2.pack()
+b = Button(f, text='click me!')
+b.pack()
+def print_hello():
+    print('hello!')
+b1 = Button(f, text='Submit', command = print_hello, fg='white',state='normal')
+b1.pack()
+textbox = StringVar()
+entrybox = Entry(root, show = '*', textvariable = textbox)
+entrybox.pack()
+root.mainloop()
