@@ -55,17 +55,19 @@ c=Canvas(root, height=600, width=600, bg='yellow')
 c.create_rectangle(50, 50, 550, 550, fill="light blue",tags=('frame'))
 c.create_polygon(210, 285, 188, 230, 210, 210, 260, 225, fill='brown', tags=('corossed ears'))
 c.create_polygon(390, 285, 412, 230, 390, 210, 340, 225, fill='brown', tags=('crossed ears'))
-c.create_polygon(390, 285, 425, 200, 385, 245, fill='white',outline='black', tags=('inside ear'))
-c.create_polygon(210, 285, 175, 200, 215, 245, fill='white',outline='black', tags=('inside ear'))
+
+c.create_polygon(210, 285, 188, 230, 210, 210, 260, 225, fill='brown')
+c.create_polygon(390, 285, 412, 230, 390, 210, 340, 225, fill='brown')
+c.create_polygon(390, 285, 412, 230, 405, 225, 385, 245, fill='white', tags=('inside ear'))
+c.create_polygon(210, 285, 188, 230, 195, 225, 215, 245, fill='white', tags=('inside ear'))
 c.create_oval(200, 200, 400, 400, fill="brown", tags=('head'))
 c.create_line(300, 350, 325, 370, tags=('mouth'))
 c.create_line(300, 350, 275, 370, tags=('mouth'))
 c.create_oval(245, 280, 295, 330, fill='white', tags='pupil')
 c.create_oval(305, 330, 355, 280, fill='white', tags='pupil')
-c.create_oval(290, 330, 310, 350, fill='pink', tags='nose')
-# left=c.create_oval(260, 300, 290, 330, fill='black')
-# right=c.create_oval(310, 300, 340, 330, fill='black')
-c.pack()
+
+
+
 
 def toggle_eyes():
     '''
@@ -126,28 +128,36 @@ right_eye_pupil_4 = c.create_oval(325, 290, 355, 320, fill='black', tags=('eye',
 toggle_eyes()  # function must be called once in the main code to start the automatic process
 
 def toggle_ears():
-    if c.itemcget(left_ear_2, 'state') == NORMAL:
-        c.itemconfigure(left_ear_2, state=HIDDEN)
-        c.itemconfigure(right_ear_2, state=HIDDEN)
-
-        c.itemconfigure(left_ear_1, state=NORMAL)
-        c.itemconfigure(right_ear_1, state=NORMAL)
-        
+    if c.itemcget(left_ear, 'state') == NORMAL:
+        c.itemconfigure(left_ear, state=HIDDEN)
+        c.itemconfigure(right_ear, state=HIDDEN)
+        c.itemconfigure(right_white_thing,state=HIDDEN)
+        c.itemconfigure(left_white_thing,state=HIDDEN)        
     else:
-        c.itemconfigure(left_ear_1, state=HIDDEN)
-        c.itemconfigure(right_ear_1, state=HIDDEN)
+        c.itemconfigure(left_ear, state=NORMAL)
+        c.itemconfigure(right_ear, state=NORMAL)
+        c.itemconfigure(right_white_thing,state=NORMAL)
+        c.itemconfigure(left_white_thing,state=NORMAL)   
 
-        c.itemconfigure(left_ear_2, state=NORMAL)
-        c.itemconfigure(right_ear_2, state=NORMAL)
     root.after(1000, toggle_ears)
 
-left_ear_1 = c.create_polygon(188, 230, 175, 200, 210, 210, fill='brown', state=NORMAL)
-right_ear_1 = c.create_polygon(412, 230, 425, 200, 390, 210, fill='brown', state=NORMAL)
+left_ear = c.create_polygon(188, 230, 175, 200, 210, 210, fill='brown', state=NORMAL)
+right_ear = c.create_polygon(412, 230, 425, 200, 390, 210, fill='brown', state=NORMAL)
 
-left_ear_2 = c.create_polygon(210, 285, 188, 230, 210, 210, 260, 225, fill='brown', state=HIDDEN)
-right_ear_2 = c.create_polygon(390, 285, 412, 230, 390, 210, 340, 225, fill='brown',state=HIDDEN)
+left_white_thing = c.create_polygon(188, 230, 175, 200, 195, 225, fill='white', state=NORMAL)
+right_white_thing = c.create_polygon(405, 225, 425, 200, 412, 230, fill='white',state=NORMAL)
 
 toggle_ears()
+
+def blush (event): # this will be called when event happens
+    event.widget.itemconfigure('a', fill = 'pink')
+a1=c.create_oval(290, 330, 310, 350, fill='pink')
+a2= c.create_oval(240, 330, 270, 360, fill='purple', outline='brown', tags=('a'))
+a3= c.create_oval(340, 330, 370, 360, fill='purple', outline='brown', tags=('a'))
+c.tag_bind('a', '<ButtonPress>', blush)
+
+
+
 
 c.pack()
 root.mainloop()
