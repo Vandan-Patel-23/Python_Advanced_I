@@ -127,22 +127,30 @@ right_eye_pupil_4 = c.create_oval(325, 290, 355, 320, fill='black', tags=('eye',
 
 toggle_eyes()  # function must be called once in the main code to start the automatic process
 
+
 def toggle_ears():
     if c.itemcget(left_ear, 'state') == NORMAL:
         c.itemconfigure(left_ear, state=HIDDEN)
         c.itemconfigure(right_ear, state=HIDDEN)
         c.itemconfigure(right_white_thing,state=HIDDEN)
-        c.itemconfigure(left_white_thing,state=HIDDEN)        
+        c.itemconfigure(left_white_thing,state=HIDDEN)
+        c.itemconfigure(a,state=NORMAL) 
+        c.itemconfigure(b,state=NORMAL)        
     else:
         c.itemconfigure(left_ear, state=NORMAL)
         c.itemconfigure(right_ear, state=NORMAL)
         c.itemconfigure(right_white_thing,state=NORMAL)
-        c.itemconfigure(left_white_thing,state=NORMAL)   
+        c.itemconfigure(left_white_thing,state=NORMAL) 
+        c.itemconfigure(a,state=HIDDEN) 
+        c.itemconfigure(b,state=HIDDEN)  
 
     root.after(1000, toggle_ears)
 
 left_ear = c.create_polygon(188, 230, 175, 200, 210, 210, fill='brown', state=NORMAL)
 right_ear = c.create_polygon(412, 230, 425, 200, 390, 210, fill='brown', state=NORMAL)
+
+a = c.create_polygon(188, 230, 200, 260, 210, 210, fill='brown', state=HIDDEN)
+b = c.create_polygon(412, 230, 400, 260, 390, 210, fill='brown', state=HIDDEN)
 
 left_white_thing = c.create_polygon(188, 230, 175, 200, 195, 225, fill='white', state=NORMAL)
 right_white_thing = c.create_polygon(405, 225, 425, 200, 412, 230, fill='white',state=NORMAL)
@@ -151,13 +159,17 @@ toggle_ears()
 
 def blush (event): # this will be called when event happens
     event.widget.itemconfigure('a', fill = 'pink')
-a1=c.create_oval(290, 330, 310, 350, fill='pink')
-a2= c.create_oval(240, 330, 270, 360, fill='purple', outline='brown', tags=('a'))
-a3= c.create_oval(340, 330, 370, 360, fill='purple', outline='brown', tags=('a'))
-c.tag_bind('a', '<ButtonPress>', blush)
+a1=c.create_oval(290, 330, 310, 350, fill='pink', tags=('a'))
+a2= c.create_oval(240, 330, 270, 360, fill='brown', outline='brown', tags=('a'))
+a3= c.create_oval(340, 330, 370, 360, fill='brown', outline='brown', tags=('a'))
+c.tag_bind('a','<Enter>', blush)
 
+def something(event):
+    event.widget.itemconfigure('a', fill = 'brown')
+    c.create_oval(290, 330, 310, 350, fill='pink')
+c.tag_bind('a','<Leave>', something)
 
-
+root.after(1000, blush)
 
 c.pack()
 root.mainloop()
